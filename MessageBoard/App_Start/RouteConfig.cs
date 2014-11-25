@@ -14,10 +14,20 @@ namespace MessageBoard
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "MyMessages",
+                url: "MyMessages",
+                defaults: new { controller = "Home", action = "MyMessages" });
+
+            routes.MapRoute(
+                name: "Moderation",
+                url: "Moderation",
+                defaults: new { controller = "Home", action = "Moderation" });
+
+            // default route
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
     }
 }
