@@ -63,7 +63,14 @@ namespace MessageBoard.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult MyMessages()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Moderation()
         {
             return View();
         }
