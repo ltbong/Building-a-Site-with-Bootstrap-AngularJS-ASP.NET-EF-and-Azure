@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using MessageBoard.Data;
 using MessageBoard.Models;
 using MessageBoard.Services;
 
@@ -14,16 +15,23 @@ namespace MessageBoard.Controllers
     public class HomeController : Controller
     {
         private IMailService _mail;
+        private readonly IMessageBoardRepository _repo;
 
-        public HomeController(IMailService mailService)
+        public HomeController(IMailService mail, IMessageBoardRepository repo)
         {
-            _mail = mailService;
+            _mail = mail;
+            _repo = repo;
         }
+
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            //ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            return View();
+            var topics = _repo.GetTopics().OrderByDescending(t => t.Created)
+                .Take(25)
+                .ToList();
+
+            return View(topics);
         }
 
         public ActionResult About()
