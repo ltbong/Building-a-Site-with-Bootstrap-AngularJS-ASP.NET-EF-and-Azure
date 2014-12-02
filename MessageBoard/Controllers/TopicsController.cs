@@ -19,9 +19,12 @@ namespace MessageBoard.Controllers
 
         public IEnumerable<Topic> Get()
         {
-            return _repo.GetTopics()
+            var topics = _repo.GetTopics()
                 .OrderByDescending(t => t.Created)
-                .Take(50);
+                .Take(25)
+                .ToList();
+
+            return topics;
         } 
     }
 }

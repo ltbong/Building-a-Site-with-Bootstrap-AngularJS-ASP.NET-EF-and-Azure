@@ -27,7 +27,8 @@ namespace MessageBoard.Controllers
         {
             //ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            var topics = _repo.GetTopics().OrderByDescending(t => t.Created)
+            var topics = _repo.GetTopics()
+                .OrderByDescending(t => t.Created)
                 .Take(25)
                 .ToList();
 
