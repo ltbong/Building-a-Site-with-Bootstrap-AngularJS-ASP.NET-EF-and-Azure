@@ -1,14 +1,18 @@
 ﻿// home-index.js
-
 var module = angular.module("homeIndex", ['ngRoute']);
 
-module.config(function($routeProvider) {
+module.config(function ($routeProvider) {
     $routeProvider.when("/", {
         controller: "topicsController",
         templateUrl: "/templates/topicsView.html"
     });
 
-    $routeProvider.otherwise({redirectTo: "/" });
+    $routeProvider.when("/newmessage", {
+        controller: "newTopicController",
+        templateUrl: "/templates/newTopicView.html"
+    });
+
+    $routeProvider.otherwise({ redirectTo: "/" });
 });
 
 module.controller("topicsController", function ($scope, $http) {
@@ -28,4 +32,23 @@ module.controller("topicsController", function ($scope, $http) {
         .then(function () {
             $scope.isBusy = false;
         });
+});
+
+module.controller("newTopicController", function ($scope, $http, $window) {
+    $scope.newTopic = {};
+
+    $scope.save = function () {
+        $http.post("/api/v1/topics", $scope.newTopic)
+            .then(function (result) {
+                // success
+                var newTopic = result.data;
+                // TODO merge with existing list of topics.
+                $window.location = "#/";
+            }, 
+            function () {
+                // falure
+                alert("Cannot save the new topic... Sorry!");
+            }
+            );
+    };
 });

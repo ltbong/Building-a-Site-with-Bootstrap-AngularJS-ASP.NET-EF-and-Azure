@@ -1,5 +1,6 @@
 ﻿/* Use this css file to override presets */
 @baseMessageColor: #aaa;
+@errorMessageColor: #f00;
 
 .message
 {
@@ -34,4 +35,9 @@
             text-shadow: 2px 2px 3px @baseMessageColor;
         }
     }
+}
+
+.error{
+    color: @errorMessageColor;
+    font-style: italic;
 }
