@@ -15,40 +15,93 @@ module.config(function ($routeProvider) {
     $routeProvider.otherwise({ redirectTo: "/" });
 });
 
-module.controller("topicsController", function ($scope, $http) {
-    $scope.data = [];
-    $scope.isBusy = true;
+module.factory("dataService", function ($http, $q) {
+    var _topics = [];
+    var _isInit = false;
 
-    $http.get("/api/v1/topics?includeReplies=true")
-        .then(function (result) {
-            // Success fn
-            $scope.dataCount = result.data.length;
-            angular.copy(result.data, $scope.data);
+    var _isReady = function() {
+        return _isInit;
+    }
+
+    var _getTopics = function () {
+
+        var deferred = $q.defer();
+
+        $http.get("/api/v1/topics?includeReplies=true")
+            .then(
+            function (result) {
+                // success
+                angular.copy(result.data, _topics);
+                _isInit = true;
+                deferred.resolve();
+            },
+            function () {
+                // error
+                deferred.reject();
+            });
+
+        return deferred.promise;
+    };
+
+    var _addTopic = function (newTopic) {
+        var deferred = $q.defer();
+
+        $http.post("/api/v1/topics", newTopic)
+            .then(function (result) {
+                // success
+                var newlyCreatedTopic = result.data;
+                _topics.splice(0, 0, newlyCreatedTopic);
+                deferred.resolve(newlyCreatedTopic);
+            },
+                function () {
+                    // error
+                    deferred.reject();
+                });
+
+        return deferred.promise;
+    };
+
+    return {
+        topics: _topics,
+        getTopics: _getTopics,
+        addTopic: _addTopic,
+        isReady: _isReady
+    };
+});
+
+module.controller("topicsController", function ($scope, $http, dataService) {
+    $scope.data = dataService;
+    $scope.isBusy = false;
+
+    if (dataService.isReady() === false) {
+        $scope.isBusy = true;
+        dataService.getTopics()
+        .then(function () {
+            // success -- nothing to do here.
         },
             function () {
-                // Failure fn
-                alert("Could not load topics");
+                // error -- alert the user.
+                alert('Sorry... Could not load topics');
             })
         .then(function () {
             $scope.isBusy = false;
         });
+    }
+
 });
 
-module.controller("newTopicController", function ($scope, $http, $window) {
+module.controller("newTopicController", function ($scope, $http, $window, dataService) {
     $scope.newTopic = {};
 
     $scope.save = function () {
-        $http.post("/api/v1/topics", $scope.newTopic)
-            .then(function (result) {
+        dataService.addTopic($scope.newTopic)
+            .then(function () {
                 // success
-                var newTopic = result.data;
-                // TODO merge with existing list of topics.
                 $window.location = "#/";
-            }, 
-            function () {
-                // falure
-                alert("Cannot save the new topic... Sorry!");
-            }
-            );
+            },
+                function () {
+                    // error
+                    alert('Could not save the new topic.');
+                });
     };
 });
