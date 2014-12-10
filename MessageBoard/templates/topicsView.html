@@ -14,7 +14,7 @@
     <div class="messages">
         <div class="message row" data-ng-repeat="item in data.topics">
             <div class="title span10">
-                {{ item.title }}
+                <a data-ng-href="#/message/{{ item.id }}">{{ item.title }}</a>
             </div>
             <div class="date span2">{{ item.created | date:"medium" }}</div>
             <div class="contents span12">
@@ -22,17 +22,7 @@
             </div>
             <div class="toolbar span12">
                 <button class="btn-primary reply-button">Reply</button>
-            </div>
-            <div class="replies span12">
-                <div class="reply" data-ng-repeat="r in item.replies">
-                    <div class="created pull-right">
-                        {{ r.created | date:"short" }}
-                    </div>
-                    <div class="content">
-                        {{ r.body }}
-                    </div>
-                </div>
-            </div>
+            </div>            
         </div>
     </div>
 </div>
