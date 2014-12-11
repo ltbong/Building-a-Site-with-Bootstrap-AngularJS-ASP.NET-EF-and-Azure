@@ -385,6 +385,7 @@
     <Content Include="js\home-index.min.js">
       <DependentUpon>home-index.js</DependentUpon>
     </Content>
+    <Content Include="js\myapp.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1166,16 +1167,34 @@
       <DependentUpon>custom.js</DependentUpon>
     </Content>
     <Content Include="Scripts\errors.json" />
-    <Content Include="Scripts\angular-touch.min.js.map" />
-    <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular-touch.min.js.map">
+      <DependentUpon>angular-touch.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-sanitize.min.js.map">
+      <DependentUpon>angular-sanitize.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\angular-resource.min.js.map" />
-    <Content Include="Scripts\angular-messages.min.js.map" />
-    <Content Include="Scripts\angular-loader.min.js.map" />
-    <Content Include="Scripts\angular-cookies.min.js.map" />
-    <Content Include="Scripts\angular-aria.min.js.map" />
-    <Content Include="Scripts\angular-animate.min.js.map" />
-    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-resource.min.js.map">
+      <DependentUpon>angular-resource.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-messages.min.js.map">
+      <DependentUpon>angular-messages.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-loader.min.js.map">
+      <DependentUpon>angular-loader.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-cookies.min.js.map">
+      <DependentUpon>angular-cookies.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-aria.min.js.map">
+      <DependentUpon>angular-aria.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-animate.min.js.map">
+      <DependentUpon>angular-animate.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular.min.js.map">
+      <DependentUpon>angular.js</DependentUpon>
+    </Content>
     <Content Include="js\home-index.min.js.map">
       <DependentUpon>home-index.js</DependentUpon>
     </Content>
@@ -1183,6 +1202,9 @@
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Scripts\jquery-2.1.1.min.js.map">
+      <DependentUpon>jquery-2.1.1.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
